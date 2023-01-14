@@ -1,4 +1,4 @@
-package com.shahjad2.demo2;
+package com.shahjad1.demohibernate;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

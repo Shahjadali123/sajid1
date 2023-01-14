@@ -1,17 +1,42 @@
-package com.shahjad2.demo2;
+package com.shahjad1.demohibernate;
+
+import org.hibernate.Session;    
+import org.hibernate.SessionFactory;    
+import org.hibernate.Transaction;  
+import org.hibernate.boot.Metadata;  
+import org.hibernate.boot.MetadataSources;  
+import org.hibernate.boot.registry.StandardServiceRegistry;  
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;  
+
+import com.mysql.cj.Session;
+import com.mysql.cj.xdevapi.SessionFactory;
 
 /**
  * Hello world!
  *
  */
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import org.hibernate.Session;
 public class App 
 {
     public static void main( String[] args )
     {
-        ApplicationContext context=new ClassPathApplicationContext("spring.xml");
-    	Vehicle obj=(Vehicle)context.getBean("vehicle");
-    	obj.drive();
+    	StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();  
+        
+    	   Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();  
+    	  
+    	SessionFactory factory = meta.getSessionFactoryBuilder().build();  
+    	Session session = factory.openSession();  
+    	Transaction t = session.beginTransaction();   
+    	            
+    	    Employee e1=new Employee();    
+    	    e1.setId(101);    
+    	    e1.setFirstName("Gaurav");    
+    	    e1.setLastName("Chawla");    
+    	        
+    	    session.save(e1);  
+    	    t.commit();  
+    	    System.out.println("successfully saved");    
+    	    factory.close();  
+    	    session.close();    
     }
 }
